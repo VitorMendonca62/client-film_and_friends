@@ -1,9 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import {
-  Room,
-  RoomEvent,
- 
-} from 'livekit-client';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineSend } from 'react-icons/ai';
 import { socket } from '../../socket';
@@ -33,7 +28,6 @@ export default function Film() {
   const author = sessionStorage.getItem('name');
 
   if (!author) {
-    console.log('a');
     navigate('/quem_e_voce');
   }
 
