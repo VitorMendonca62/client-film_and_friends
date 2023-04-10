@@ -1,8 +1,6 @@
 import { io } from 'socket.io-client';
 
-// const URL = 'http://localhost:4004';
 const URL = 'https://film-and-filmds.onrender.com';
 
-export const socket = io(URL);
-console.log(socket)
-
+export const socket = io(URL, { port: 4004 });
+console.log(socket);
