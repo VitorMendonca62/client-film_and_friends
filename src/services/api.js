@@ -1,14 +1,40 @@
 import axios from 'axios';
 
+const API_URL = 'http://localhost:4003';
+
+export const api = axios.create({
+  baseURL: API_URL,
+});
+
 export const showUser = async (id) => {
-  const API_URL = 'http://localhost:4004';
   try {
-    const response = await axios.get(`${API_URL}/auth/users/${id}`);
+    const response = await api.get(`/auth/users/${id}`);
+    const data = await response.data;
+    return data;
+  } catch (erro) {
+    console.log(erro);
+    return erro;
+  }
+};
+
+// export const singIn = async (data) => {
+//   try {
+//     const response = await api.post(`/auth/login`, data);
+//     const data = await response.data;
+//     return data;
+//   } catch (erro) {
+//     console.log(erro);
+//     return erro;
+//   }
+// };
+
+export const singUp = async (dataForm) => {
+  try {
+    const response = await api.post(`/auth/users`, dataForm);
     const data = await response.data;
 
-    const user = data.user;
-    return user;
-  } catch (error) {
-    console.log(error);
+    return { response, data };
+  } catch (erro) {
+    console.log(erro);
   }
 };

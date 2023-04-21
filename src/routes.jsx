@@ -4,11 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/layout/Header';
 
 // PAGES
-import WhoAreYou from './pages/WhoAreYou';
 import Film from './pages/Film';
 import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import SingIn from './pages/SingIn';
+import SingUp from './pages/SingUp';
 
 export default function routes() {
   return (
@@ -16,10 +15,10 @@ export default function routes() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<Register />} />
-        {/* <Route path="/quem_e_voce" element={<WhoAreYou />} />
-        <Route path="/filme" element={<Film />} /> */}
+        <Route path="/login" element={<SingIn />} />
+        <Route path="/cadastro" element={<SingUp />} />
+
+        {/*<Route path="/filme" element={<Film />} /> */}
       </Routes>
     </Router>
   );

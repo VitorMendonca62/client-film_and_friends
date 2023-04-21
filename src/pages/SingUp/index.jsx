@@ -1,4 +1,6 @@
-import axios from 'axios';
+import * as Yup from 'yup';
+
+import { singUp } from '../../services/api';
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -6,30 +8,38 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import InputForms from '../../components/InputForms';
 import ButtonForms from '../../components/ButtonForms';
-import { Main, Container, Title, NoAccount, Messege } from '../Login/styles';
+import { Main, Container, Title, NoAccount, Messege } from '../SingIn/styles';
 
-export default function Login() {
+export default function SingUp() {
   const [messege, setMessege] = useState('');
   const [visibleMessege, setVisibleMessege] = useState(false);
-  const [buttonActive, setButtonActive] = useState(false);
+  const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
   const { register, handleSubmit } = useForm();
 
   const navigate = useNavigate();
 
-  const createUser = async (dataForm) => {
-    const API_URL = 'http://localhost:4004';
 
+  const createUser = async (dataForm) => {
+    // const isErrorInInputs = verifyInputs(dataForm);
     try {
-      const response = await axios.post(API_URL + '/auth/users', dataForm);
-      const data = await response.data;
+      const { response, data } = await singUp(dataForm);
+
+      setVisibleMessege(true);
+
+      // if (data.error) {
+      //   setMessege(data.msg);
+      //   setTimeout(() => {
+      //     setVisibleMessege(false);
+      //   }, 3000);
+      //   return '';
+      // }
 
       setMessege(data.msg);
-      setVisibleMessege(true);
-      setButtonActive(true);
+      setButtonIsDisabled(true);
 
       setTimeout(() => {
-        navigate('/login');
         setVisibleMessege(false);
+        navigate('/login');
       }, 3000);
     } catch (error) {
       console.log(error);
@@ -64,13 +74,13 @@ export default function Login() {
           />
           <InputForms
             title="Confirmar senha"
-            name="password"
+            name="confirmPassword"
             type="password"
             placeholder="Confirmar senha"
             register={register}
           />
 
-          <ButtonForms buttonActive={buttonActive} title="Cadastrar" />
+          <ButtonForms ButtonIsDisabled={buttonIsDisabled} title="Cadastrar" />
         </form>
 
         <NoAccount>

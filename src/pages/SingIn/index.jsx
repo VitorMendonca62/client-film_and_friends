@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Cookies from 'js-cookie';
 
 import { useState } from 'react';
@@ -23,35 +22,14 @@ import {
   Messege,
 } from './styles';
 
-export default function Login() {
+export default function SingIn() {
   const [messege, setMessege] = useState('');
   const [visibleMessege, setVisibleMessege] = useState(false);
   const { register, handleSubmit } = useForm();
 
   const navigate = useNavigate();
 
-  const loginUser = async (dataForm) => {
-    const API_URL = 'http://localhost:4004';
-
-    try {
-      const response = await axios.post(API_URL + '/auth/login', dataForm);
-      const data = await response.data;
-
-      setMessege(data.msg);
-      setVisibleMessege(true);
-
-      const user = await showUser(data.id);
-      sessionStorage.setItem('user', JSON.stringify(user));
-      Cookies.set('token', data.token);
-
-      setTimeout(() => {
-        navigate('/', user);
-        setVisibleMessege(false);
-      }, 3000);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const loginUser = async (dataForm) => {};
 
   return (
     <Main>

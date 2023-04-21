@@ -4,5 +4,3 @@ import { io } from 'socket.io-client';
 const URL = 'http://localhost:4004';
 
 export const socket = io(URL, { transports: ['websocket'] });
-
-console.log(socket);

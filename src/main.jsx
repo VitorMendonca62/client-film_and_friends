@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { QueryClientProvider, QueryClient } from 'react-query';
 
+import { QueryClientProvider, QueryClient } from 'react-query';
+import AuthProvider from './context/auth';
 import GlobalStyle from './styles/global';
 import Routes from './routes';
 

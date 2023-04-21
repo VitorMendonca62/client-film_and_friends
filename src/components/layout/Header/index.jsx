@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AiOutlineUser, AiOutlineDown } from 'react-icons/ai';
 import { FaUserAlt, FaUserPlus } from 'react-icons/fa';
+
 import {
   HeaderContainer,
   Container,
@@ -35,7 +36,7 @@ export default function Header() {
           role: 'user',
         }
   );
-
+        
   const items = [
     {
       title: 'Recentes',
