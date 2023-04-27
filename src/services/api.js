@@ -13,20 +13,19 @@ export const showUser = async (id) => {
     return data;
   } catch (erro) {
     console.log(erro);
-    return erro;
   }
 };
 
-// export const singIn = async (data) => {
-//   try {
-//     const response = await api.post(`/auth/login`, data);
-//     const data = await response.data;
-//     return data;
-//   } catch (erro) {
-//     console.log(erro);
-//     return erro;
-//   }
-// };
+export const singIn = async (dataForm) => {
+  try {
+    const response = await api.post(`/auth/login`, dataForm);
+    const data = await response.data;
+
+    return { response, data };
+  } catch (erro) {
+    console.log(erro);
+  }
+};
 
 export const singUp = async (dataForm) => {
   try {

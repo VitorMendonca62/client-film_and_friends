@@ -1,8 +1,9 @@
+import Cookies from 'js-cookie';
 import * as Yup from 'yup';
 
 import { singUp } from '../../services/api';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -18,32 +19,69 @@ export default function SingUp() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (Cookies.get('USER_TOKEN')) {
+      navigate('/');
+    }
+  }, []);
+
+  const userSchema = Yup.object().shape({
+    name: Yup.string()
+      .required('Nome é obrigatório')
+      .max(50, 'Nome muito longo')
+      .min(8, 'Nome muito cuito'),
+    username: Yup.string()
+      .required('Apelido é obrigatório')
+      .min(3, 'Apelido muito curto')
+      .max(20, 'Nome muito longo'),
+    email: Yup.string()
+      .email('E-mail inválido.')
+      .required('O e-mail é obrigatório.'),
+    password: Yup.string()
+      .min(6, 'A senha deve ter pelo menos 6 caracteres.')
+      .required('A senha é obrigatória.'),
+    confirmPassword: Yup.string()
+      .oneOf(
+        [Yup.ref('password'), null],
+        'A confirmação da senha está diferente da senha!'
+      )
+      .required('A confirmação da senha é obrigatória.'),
+  });
 
   const createUser = async (dataForm) => {
-    // const isErrorInInputs = verifyInputs(dataForm);
+    cleanInputs();
+
     try {
-      const { response, data } = await singUp(dataForm);
+      userSchema.validateSync(dataForm, { abortEarly: false });
 
-      setVisibleMessege(true);
-
-      // if (data.error) {
-      //   setMessege(data.msg);
-      //   setTimeout(() => {
-      //     setVisibleMessege(false);
-      //   }, 3000);
-      //   return '';
-      // }
+      const { data } = await singUp(dataForm);
 
       setMessege(data.msg);
-      setButtonIsDisabled(true);
+      setVisibleMessege(true);
 
-      setTimeout(() => {
-        setVisibleMessege(false);
-        navigate('/login');
-      }, 3000);
-    } catch (error) {
-      console.log(error);
+      if (!data.error) {
+        setButtonIsDisabled(true);
+        setTimeout(() => {
+          navigate('/login');
+        }, 3500);
+      }
+    } catch (err) {
+      handleError({ type: err.inner[0].path, msg: err.inner[0].errors[0] });
     }
+  };
+
+  const cleanInputs = () => {
+    [...document.querySelectorAll(`form input`)].forEach((e) => {
+      e.style.borderColor = 'transparent';
+      e.nextElementSibling.innerText = '';
+    });
+  };
+
+  const handleError = (erro) => {
+    const element = document.querySelector(`form input[name=${erro.type}]`);
+    element.style.borderColor = '#f00';
+    const brotherElement = element.nextElementSibling;
+    brotherElement.innerText = erro.msg;
   };
 
   return (
@@ -56,6 +94,13 @@ export default function SingUp() {
             name="name"
             type="text"
             placeholder="Nome completo"
+            register={register}
+          />
+          <InputForms
+            title="Apelido"
+            name="username"
+            type="text"
+            placeholder="Apelido"
             register={register}
           />
           <InputForms
@@ -80,7 +125,7 @@ export default function SingUp() {
             register={register}
           />
 
-          <ButtonForms ButtonIsDisabled={buttonIsDisabled} title="Cadastrar" />
+          <ButtonForms buttonIsDisabled={buttonIsDisabled} title="Cadastrar" />
         </form>
 
         <NoAccount>

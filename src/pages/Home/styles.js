@@ -38,6 +38,7 @@ export const Logo = styled.span`
 export const MainDescription = styled.p`
   font-size: 1.6rem;
   color: ${colors.grey};
-  max-width: 20%;
+  max-width: 450px;
+  line-height: 20px;
   text-align: center;
 `;

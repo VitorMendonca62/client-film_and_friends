@@ -1,10 +1,12 @@
 import Cookies from 'js-cookie';
+import * as Yup from 'yup';
+import { UserContext } from '../../context/user';
 
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { showUser } from '../../services/api';
+import { singIn } from '../../services/api';
 
 import InputForms from '../../components/InputForms';
 import ButtonForms from '../../components/ButtonForms';
@@ -25,17 +27,70 @@ import {
 export default function SingIn() {
   const [messege, setMessege] = useState('');
   const [visibleMessege, setVisibleMessege] = useState(false);
+  const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
   const { register, handleSubmit } = useForm();
+  const { user, updateUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
-  const loginUser = async (dataForm) => {};
+  useEffect(() => {
+    if (Cookies.get('USER_TOKEN')) {
+      navigate('/');
+    }
+  }, []);
+    
+  const userSchema = Yup.object().shape({
+    email: Yup.string()
+      .email('E-mail inválido.')
+      .required('O e-mail é obrigatório.'),
+    password: Yup.string()
+      .min(6, 'A senha deve ter pelo menos 6 caracteres.')
+      .required('A senha é obrigatória.'),
+  });
+
+  const singInUser = async (dataForm) => {
+    try {
+      userSchema.validateSync(dataForm, { abortEarly: false });
+
+      const { data } = await singIn(dataForm);
+
+      setMessege(data.msg);
+      setVisibleMessege(true);
+      setButtonIsDisabled(true);
+
+      if (!data.error) {
+        Cookies.set('USER_ID', data.id, { expires: 7 });
+        Cookies.set('USER_TOKEN', data.token, { expires: 7 });
+
+        updateUser(data);
+
+        setTimeout(() => {
+          navigate('/');
+        }, 3500);
+      }
+      if (data.error) {
+        setTimeout(() => {
+          setButtonIsDisabled(false);
+          setVisibleMessege(false);
+        }, 3500);
+      }
+    } catch (err) {
+      handleError({ type: err.inner[0].path, msg: err.inner[0].errors[0] });
+    }
+  };
+
+  const handleError = (erro) => {
+    const element = document.querySelector(`form input[name=${erro.type}]`);
+    element.style.borderColor = '#f00';
+    const brotherElement = element.nextElementSibling;
+    brotherElement.innerText = erro.msg;
+  };
 
   return (
     <Main>
       <Container>
         <Title>Login</Title>
-        <form onSubmit={handleSubmit(loginUser)}>
+        <form onSubmit={handleSubmit(singInUser)}>
           <InputForms
             title="Email"
             name="email"
@@ -54,7 +109,7 @@ export default function SingIn() {
             <Link>Esqueceu a senha?</Link>
           </ForgotPassword>
 
-          <ButtonForms title="Entrar" />
+          <ButtonForms buttonIsDisabled={buttonIsDisabled} title="Entrar" />
         </form>
 
         <NoAccount>

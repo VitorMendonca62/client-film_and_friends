@@ -8,6 +8,7 @@ import Film from './pages/Film';
 import Home from './pages/Home';
 import SingIn from './pages/SingIn';
 import SingUp from './pages/SingUp';
+import Profile from './pages/Profile';
 
 export default function routes() {
   return (
@@ -17,6 +18,7 @@ export default function routes() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<SingIn />} />
         <Route path="/cadastro" element={<SingUp />} />
+        <Route path="/profile/:username" element={<Profile />} />
 
         {/*<Route path="/filme" element={<Film />} /> */}
       </Routes>

@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { UserContext } from '../../../context/user';
+import { useContext, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { AiOutlineUser, AiOutlineDown } from 'react-icons/ai';
 import { FaUserAlt, FaUserPlus } from 'react-icons/fa';
+import { FiLogOut } from 'react-icons/fi';
 
 import {
   HeaderContainer,
@@ -23,20 +25,12 @@ import {
 
 export default function Header() {
   const [visibleMenu, setVisibleMenu] = useState(false);
-  const sessionUser = sessionStorage.getItem('user');
-  const isLogged = !!sessionUser;
+  const { user, updateUser, logoutUser } = useContext(UserContext);
+  const isLogged = user.auth;
 
-  const [user, setUser] = useState(
-    sessionUser
-      ? JSON.parse(sessionUser)
-      : {
-          id: null,
-          email: null,
-          name: 'Visitante',
-          role: 'user',
-        }
-  );
-        
+  console.log(user)
+  const firstName = user.username;
+
   const items = [
     {
       title: 'Recentes',
@@ -55,15 +49,16 @@ export default function Header() {
       direct: '/filmes',
     },
   ];
-  const name = user.name.split(' ')[0];
 
   return (
     <HeaderContainer>
       <Container>
         <Logo>
-          Movie
-          <Mark>And</Mark>
-          Friends
+          <Link to="/">
+            Movie
+            <Mark>And</Mark>
+            Friends
+          </Link>
         </Logo>
         <HeaderRight>
           <Nav>
@@ -78,7 +73,7 @@ export default function Header() {
           <Welcome onClick={() => setVisibleMenu(!visibleMenu)}>
             <AiOutlineUser />
             <ParagraphWelcome>
-              Olá, <Mark>{name}</Mark> <AiOutlineDown />
+              Olá, <Mark>{firstName}</Mark> <AiOutlineDown />
             </ParagraphWelcome>
           </Welcome>
           {visibleMenu && (
@@ -86,7 +81,20 @@ export default function Header() {
               <MenuNav>
                 <MenuList>
                   {isLogged ? (
-                    ''
+                    <>
+                      <Link to="/meu-perfil">
+                        <MenuItem>
+                          <FaUserAlt />
+                          Meu perfil
+                        </MenuItem>
+                      </Link>
+                      <Link onClick={logoutUser}>
+                        <MenuItem>
+                          <FiLogOut />
+                          Sair
+                        </MenuItem>
+                      </Link>
+                    </>
                   ) : (
                     <>
                       <Link to="/login">

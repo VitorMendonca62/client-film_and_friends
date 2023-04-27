@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { colors } from '../styles/colors';
+import { useRef } from 'react';
 
 const Button = styled.button`
   background-color: ${colors.white};
@@ -18,9 +19,15 @@ const Button = styled.button`
   }
 `;
 
-export default function ButtonForms({ title, buttonActive }) {
+export default function ButtonForms({ title, buttonIsDisabled }) {
+  const buttonRef = useRef(null);
+
+  if (!!buttonRef.current) {
+    buttonRef.current.disabled = buttonIsDisabled;
+  }
+
   return (
-    <Button disabled={buttonActive} type="submit">
+    <Button ref={buttonRef} type="submit">
       {title}
     </Button>
   );

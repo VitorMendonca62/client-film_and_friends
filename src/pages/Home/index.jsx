@@ -16,32 +16,7 @@ import {
 } from './styles';
 
 export default function Home() {
-  const sessionUser = sessionStorage.getItem('user');
-
-  // const [user, setUser] = useState(
-  //   sessionUser
-  //     ? JSON.parse(sessionUser)
-  //     : {
-  //         id: null,
-  //         email: null,
-  //         name: 'Visitante',
-  //         role: 'user',
-  //       }
-  // );
-
   const location = useLocation();
-
-  // useEffect(() => {
-  //   async function fetchUser(id) {
-  //     const userData = await showUser(id);
-  //     setUser(userData);
-
-  //   }
-
-  //   if (location.state) {
-  //     fetchUser(location.state.id);
-  //   }
-  // }, []);
 
   return (
     <Main>
