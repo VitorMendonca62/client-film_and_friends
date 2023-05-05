@@ -6,6 +6,9 @@ export const HeaderContainer = styled.header`
   background-color: ${colors.dark_grey};
   padding: 20px 28px;
   color: ${colors.white};
+  position: fixed;
+  z-index: 0909999;
+  width: calc(100% - 28px * 2);
 `;
 
 export const Container = styled.div`

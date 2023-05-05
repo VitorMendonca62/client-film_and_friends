@@ -4,6 +4,8 @@ import { colors } from '../../styles/colors';
 export const Main = styled.main`
   color: ${colors.light_grey};
   background-color: ${colors.black};
+  position: relative;
+  top: 62px;
 `;
 
 export const Container = styled.div``;

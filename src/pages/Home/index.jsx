@@ -1,7 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { showUser } from '../../services/api';
-
 import Section from '../../components/layout/Section';
 
 import Image from '../../assets/imgs/main_image.svg';
@@ -16,7 +12,6 @@ import {
 } from './styles';
 
 export default function Home() {
-  const location = useLocation();
 
   return (
     <Main>

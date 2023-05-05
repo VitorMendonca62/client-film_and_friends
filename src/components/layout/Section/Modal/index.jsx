@@ -1,5 +1,5 @@
 import { UserContext } from '../../../../context/user';
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -36,14 +36,25 @@ import Foto from '../../../../assets/imgs/my-footo.png';
 
 export default function Modal({ data, setVisibleModal, visibleModal }) {
   const { user } = useContext(UserContext);
+
   const isLogged = user.auth;
-
   const navigate = useNavigate();
-  if (!isLogged) {
-    navigate('/login');
-  }
 
-  const { title, release, genre, duration, synopsis, rating } = data;
+  const {
+    title,
+    release,
+    genre,
+    duration,
+    synopsis,
+    rating,
+    id,
+    participant,
+    imdbID,
+  } = data;
+
+  const handleClick = () => {
+    navigate(`/filme/${id}`, { state: { imdbID } });
+  };
 
   return (
     <>
@@ -66,7 +77,7 @@ export default function Modal({ data, setVisibleModal, visibleModal }) {
                 <Rating>
                   <RatingInfo>
                     <AiFillStar />
-                    {rating.toFixed(1)}
+                    {Number(rating).toFixed(1)}
                   </RatingInfo>
                   <RatingInfo>
                     <AiOutlineStar />
@@ -80,18 +91,15 @@ export default function Modal({ data, setVisibleModal, visibleModal }) {
                 height="300"
                 src="https://www.youtube.com/embed/4s4UCxCv_OE"
                 title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
               ></iframe>
               <Room>
                 <RoomTitle>Sala</RoomTitle>
                 <RoomInfos>
                   <Info>
-                    ID: <Value>41451747</Value>
+                    ID: <Value>{id}</Value>
                   </Info>
                   <Info>
-                    Participantes: <Value>1 / 10</Value>
+                    Participantes: <Value>{participant.length} / 10</Value>
                   </Info>
                   <Participants>
                     Integrantes:
@@ -110,7 +118,7 @@ export default function Modal({ data, setVisibleModal, visibleModal }) {
                   </Participants>
                 </RoomInfos>
               </Room>
-              <Button>
+              <Button onClick={handleClick}>
                 <HiPlay />
               </Button>
             </Main>

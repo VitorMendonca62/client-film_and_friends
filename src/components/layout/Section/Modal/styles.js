@@ -11,7 +11,8 @@ const showModal = keyframes`
   }
 `;
 
-export const Container = styled.div``;
+export const Container = styled.div`
+`;
 export const Blur = styled.div`
   position: fixed;
   background: rgba(255, 255, 255, 0.1);
@@ -33,6 +34,7 @@ export const ModalContainer = styled.section`
   box-shadow: 10px 10px 30px 0px rgba(0, 0, 0, 0.5);
   animation: ${showModal} .5s linear;
   transition: .5s;
+  margin-top: 31px;
 `;
 
 export const Header = styled.header`

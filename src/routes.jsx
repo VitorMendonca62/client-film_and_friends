@@ -18,9 +18,9 @@ export default function routes() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<SingIn />} />
         <Route path="/cadastro" element={<SingUp />} />
-        <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/perfil/:username" element={<Profile />} />
 
-        {/*<Route path="/filme" element={<Film />} /> */}
+        <Route path="/filme/:id" element={<Film />} />
       </Routes>
     </Router>
   );

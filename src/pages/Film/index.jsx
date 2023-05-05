@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AiOutlineSend } from 'react-icons/ai';
 import { socket } from '../../socket';
+import { UserContext } from '../../context/user';
 import {
-  Url,
   Container,
   ContainerVideo,
-  Video,
   Chat,
   ChatTitle,
   ChatMesseges,
@@ -17,75 +16,66 @@ import {
 } from './styles';
 
 export default function Film() {
-  const [url, setURL] = useState('');
   const [slug, setSlug] = useState('');
   const [messageList, setMessageList] = useState([]);
-  const videoRef = useRef(null);
   const inputMessegeRef = useRef(null);
+  const { id } = useParams();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useContext(UserContext);
 
-  const author = sessionStorage.getItem('name');
+  const imdbID = location.state.imdbID;
 
-  if (!author) {
-    navigate('/quem_e_voce');
+  if (!user) {
+    navigate('/login');
   }
 
+  const author = user.username;
+
   useEffect(() => {
-    socket.on('receivedMessage', (data) => {
+    socket.emit('join-room');
+    console.log('A'); // Renderiza 2 vezes quando dar refresh
+  }, []);
+
+  useEffect(() => {
+    socket.on('received-message', (data) => {
       setMessageList((current) => [...current, data]);
+      console.log('C'); // ele vem 4 vezes
     });
-
-    socket.on('receivedStateVideo', (data) => {
-      if (data.isPaused) {
-        videoRef.current.pause();
-        return;
-      }
-      videoRef.current.play();
-    });
-
-    return () => {
-      socket.off('receivedMessage');
-      socket.off('receivedStateVideo');
-    };
+    console.log('B'); // Vem renderiza 2 vezes quando dar refresh
   }, [socket]);
 
   const handleSendMessege = (e) => {
     e.preventDefault();
+    if (!slug) {
+      return;
+    }
     setSlug('');
     inputMessegeRef.current.focus();
-    socket.emit('sendMessage', { author, slug });
-  };
-
-  const handleStateVideo = (e) => {
-    socket.emit('stateVideo', {
-      isPaused: videoRef.current.paused,
-    });
+    socket.emit('send-message', { author, slug }); // EMITE APENAS 1 VEZ
+    console.log("EMITOU")
   };
 
   return (
     <Container>
-      <Url
-        type="text"
-        placeholder="url"
-        onChange={(e) => setURL(e.target.value)}
-        value={url}
-      />
       <ContainerVideo>
-        <Video
-          ref={videoRef}
-          controls
-          onPlay={handleStateVideo}
-          onPause={handleStateVideo}
-          src="https://github.com/VitorMendonca62/portfolio/raw/master/src/assets/imgs/highlights/a.mp4"
-        ></Video>
+        {/* <iframe
+          id="EmbedderContainer"
+          src={'https://embedder.net/e/' + imdbID}
+          allowfullscreen="allowfullscreen"
+          frameborder="0"
+        ></iframe> */}
         <Chat>
           <ChatTitle>Chat</ChatTitle>
           <ChatMesseges>
             {messageList?.map((message, index) => (
-              <Message>
-                <strong>{message.author}</strong>
-                <p>{message.slug}</p>
+              <Message key={index}>
+                <span></span>
+                <div>
+                  <strong>{message.author}</strong>
+                  <p>{message.slug}</p>
+                </div>
               </Message>
             ))}
           </ChatMesseges>
@@ -95,6 +85,7 @@ export default function Film() {
               onChange={(e) => setSlug(e.target.value)}
               value={slug}
               ref={inputMessegeRef}
+              placeholder="Digite sua mensagem"
             />
             <ChatButton>
               <AiOutlineSend />

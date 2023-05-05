@@ -14,7 +14,6 @@ export default function UserProvider({ children }) {
       data.then((e) => setUser({ ...e.user, auth: true }));
     }
   }, []);
-
   const handleUpdateUser = (newUser) => {
     setUser(newUser);
   };

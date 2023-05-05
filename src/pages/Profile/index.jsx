@@ -12,6 +12,8 @@ const Main = styled.main`
   display: flex;
   justify-content: center;
   min-height: 90vh;
+  position: relative;
+  top: 62px;
 `;
 const Container = styled.div`
   background-color: ${colors.dark_grey};

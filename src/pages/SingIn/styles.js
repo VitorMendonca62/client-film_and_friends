@@ -4,11 +4,13 @@ import { colors } from '../../styles/colors';
 export const Main = styled.main`
   background-color: ${colors.black};
   color: ${colors.white};
-  min-height: 93.4vh;
+  height: calc(100vh - 62px);
 
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  top: 62px;
 `;
 export const Container = styled.div`
   width: 350px;

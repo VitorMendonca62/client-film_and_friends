@@ -28,9 +28,7 @@ export default function Header() {
   const { user, updateUser, logoutUser } = useContext(UserContext);
   const isLogged = user.auth;
 
-  console.log(user)
   const firstName = user.username;
-
   const items = [
     {
       title: 'Recentes',
