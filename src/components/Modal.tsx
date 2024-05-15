@@ -151,11 +151,11 @@ export default function Modal(props: IPropsModal) {
               Faça login ou cadastra-se para assistir todos os filmes e séries
               junto com seus amigos
             </p>
-            <Link to={"/sing"} className="w-full flex justify-center mt-5">
+            <Link to={'/sing'} className="w-full flex justify-center mt-5">
               <Button title="Cadastrar" isBigger={true} />
             </Link>
             <p className="my-4 text-fonts w-full max-w-lg text-center">OU</p>
-            <Link to={"/singin"} className="w-full flex justify-center">
+            <Link to={'/singin'} className="w-full flex justify-center">
               <Button title="Entrar" isBigger={true} />
             </Link>
           </main>
