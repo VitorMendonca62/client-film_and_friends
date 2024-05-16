@@ -15,7 +15,7 @@ export default function Modal(props: IPropsModal) {
   const [rating, setRating] = useState<null | number>(null);
   const [stars, setStars] = useState<JSX.Element[]>([]);
   const [enablesStars, setEnablesStars] = useState(rating || 0);
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
 
   const { setVisibleModal } = props;
 
@@ -58,6 +58,7 @@ export default function Modal(props: IPropsModal) {
     }
   };
 
+  console.log("a")
   createStars();
 
   return (

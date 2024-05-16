@@ -8,10 +8,17 @@ export default {
         "black": '#111111', 
         "darkGreen": "#25A96C",
         "white": "#ffffff",
-        "fonts": "#AAAAAA"
+        "fonts": "#AAAAAA",
+        "red": "#FF0000"
       },
       backgroundImage: {
         "main": "url('/src/assets/imgs/backgroundMain.png')"
+      },
+      keyframes: {
+        wiggle: {
+          '0%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        }
       }
     },
   },
