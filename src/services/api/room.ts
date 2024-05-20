@@ -1,18 +1,17 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5145/';
+const API_URL = 'http://localhost:5145/rooms';
 
 export const api = axios.create({
   baseURL: API_URL,
 });
 
-export const singUP = async (dataForms: IUserBasicInputcSchema) => {
+export const getPageRooms = async (page: number, type: 'movie' | 'serie') => {
   try {
-    const resposne = await api.post('/users/', dataForms);
+    const resposne = await api.get(`/${type}/${page}`);
     const { data } = resposne;
     return data;
   } catch (err) {
-    console.log(err)
     const { data } = err.response;
     return data;
   }

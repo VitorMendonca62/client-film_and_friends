@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import { useForm, FieldErrors } from 'react-hook-form';
 import { userPostSchema } from '../schemas/user';
 import { useState } from 'react';
-import { singUP } from '../services/api';
+import { singUP } from '../services/api/user';
 import { clearInputs, handleErrors } from '../utils/forms';
 
 export default function SingUp() {

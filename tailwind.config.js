@@ -15,10 +15,22 @@ export default {
         "main": "url('/src/assets/imgs/backgroundMain.png')"
       },
       keyframes: {
-        wiggle: {
-          '0%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
+        visible: {
+          '0%': { opacity: '0.35' },
+
+          '100%': { opacity: '1' },
+        },
+        enableMenu: {
+          "0%": {height: "0"},
+          "50%": {height: "50%"},
+          "75%": {height: "100%"},
+          "100%": {height: "150%"}
+
         }
+      },
+      animation: {
+        visible: 'visible 1.5s linear',
+        enableMenu: 'enableMenu 0.25s linear',
       }
     },
   },

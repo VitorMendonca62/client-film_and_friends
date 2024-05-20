@@ -1,10 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import { QueryClient, QueryClientProvider } from 'react-query';
+
 import Routes from './routes';
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Routes/>
+    <QueryClientProvider client={queryClient}>
+      <Routes />
+    </QueryClientProvider>
   </React.StrictMode>,
 );

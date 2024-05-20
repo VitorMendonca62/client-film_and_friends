@@ -5,9 +5,11 @@ import { IoCloseCircleOutline } from 'react-icons/io5';
 import { FaRegStar } from 'react-icons/fa6';
 import { FaStar } from 'react-icons/fa6';
 import Button from './Button';
+import { defineTypeMedia } from '../utils/media';
 
 interface IPropsModal {
-  setVisibleModal: (_: boolean) => void;
+  setVisibleModal: (visibleModal: boolean) => void;
+  contentModal: [ISerie | IMovie, IRoom];
 }
 
 export default function Modal(props: IPropsModal) {
@@ -17,7 +19,15 @@ export default function Modal(props: IPropsModal) {
   const [enablesStars, setEnablesStars] = useState(rating || 0);
   const [isLogged, setIsLogged] = useState(true);
 
-  const { setVisibleModal } = props;
+  const { setVisibleModal, contentModal } = props;
+
+  const typeMedia = defineTypeMedia(contentModal[0]);
+
+  let description = contentModal[0].description;
+
+  if (description.length > 450) {
+    description = description.slice(0, 450) + '...';
+  }
 
   const createStars = () => {
     stars.length = 0;
@@ -58,17 +68,16 @@ export default function Modal(props: IPropsModal) {
     }
   };
 
-  console.log("a")
   createStars();
 
   return (
-    <section className=" fixed top-0 translate-y-16 flex items-center justify-center h-screen w-screen">
+    <section className=" fixed top-0 translate-y-16 flex items-center justify-center h-screen w-screen ">
       <div
         className="bg-[rgb(255,255,255,0.1)] h-full w-full absolute backdrop-blur-sm z-40"
         onClick={() => setVisibleModal(false)}
       ></div>
       {isLogged ? (
-        <div className="-translate-y-10 text-white z-50 ">
+        <div className="-translate-y-10 text-white z-50">
           <header className="bg-black flex justify-between items-center px-6 py-2 rounded-t-2xl">
             <p className="text-sm cursor-pointer hover:text-darkGreen hover:underline">
               Favoritar
@@ -79,12 +88,20 @@ export default function Modal(props: IPropsModal) {
             />
           </header>
           <main className="bg-lightBlack px-6 p-6 rounded-b-2xl">
-            <h3 className="font-bold text-2xl">Até o ultimo homem</h3>
+            <h3 className="font-bold text-2xl">{contentModal[0].title}</h3>
             <div className="flex w-full justify-between text-fonts items-center">
-              <p className="text-sm">2017 | Guerra | 147 min</p>
+              <p className="text-sm">
+                {contentModal[0].releaseDate.slice(0, 4)} | {contentModal[0].genres[0]} |{" "} 
+                {typeMedia
+                  ? typeMedia === 'movie'
+                    ? `${(contentModal[0] as IMovie).duration} min`
+                    : (contentModal[0] as ISerie).seasons
+                  : 'null'}
+              </p>
               <div className="flex gap-x-20 mr-12 pl-96">
                 <p>
-                  <span className="text-white pr-1">Avaliação:</span> 5.0 / 5.0
+                  <span className="text-white pr-1">Avaliação:</span>{' '}
+                  {contentModal[0].rating} / 5.0
                 </p>
                 <div
                   className="flex flex-col items-center"
@@ -104,19 +121,14 @@ export default function Modal(props: IPropsModal) {
                 </div>
               </div>
             </div>
-            <p className="my-4 text-fonts w-full max-w-lg">
-              Em Até o Último Homem, durante a Segunda Guerra Mundial, o médico
-              do exército Desmond T. Doss (Andrew Garfield) se recusa a pegar em
-              uma arma e matar pessoas, porém, durante a Batalha de Okinawa ele
-              trabalha na ala médica e salva mais de 75 homens, sendo
-              condecorado. O que faz de Doss o primeiro Opositor Consciente da
-              história norte-americana a receber a Medalha de Honra do
-              Congresso.
-            </p>
+            <p className="my-4 text-fonts w-full max-w-lg">{description}</p>
             <div>
               <h3 className="font-bold text-2xl pb-2">Sala</h3>
               <p>
-                ID: <span className="text-fonts">dwadawd</span>
+                ID: <span className="text-fonts">{contentModal[1].id}</span>
+              </p>
+              <p>
+                ID API: <span className="text-fonts">{contentModal[0].idAPI}</span>
               </p>
               <p>
                 Participantes: <span className="text-fonts">2</span>
@@ -127,10 +139,8 @@ export default function Modal(props: IPropsModal) {
               <iframe
                 width="500"
                 height="250"
-                src="https://www.youtube.com/embed/4s4UCxCv_OE?si=Bb4wqvG7RwtKz3WX"
+                src={contentModal[0].urlTrailer?.replace('watch?v=', 'embed/')}
                 title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen={true}
               ></iframe>
             </div>
             <div className="w-full flex justify-center mt-5">

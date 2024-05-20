@@ -11,7 +11,7 @@ import { FaUserPlus } from 'react-icons/fa';
 let lastValueScroll = 0;
 function changeHeaderStyles(setVisibleMenu: Dispatch<SetStateAction<boolean>>) {
   const headerElement = document.querySelector('header');
-  headerElement?.classList.add('bg-lightBlack');
+
   if (['/home'].includes(location.pathname)) {
     if (lastValueScroll < window.scrollY) {
       if (!headerElement?.classList.contains('-translate-y-full'))
@@ -52,7 +52,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="w-screen px-7 py-3.5 text-white z-50 fixed transition linear duration-1000 bg-lightBlack">
+    <header className="w-screen px-7 py-3.5 text-white z-50 fixed transition ease-in duration-500">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold">
           <Link to="/home">
@@ -71,7 +71,7 @@ export default function Header() {
         </div>
       </div>
       {visibleMenu && (
-        <div className="absolute right-7 text-sm bg-black w-36 rounded-2xl">
+        <nav className="absolute right-7 text-sm bg-black w-36 rounded-2xl animate-enableMenu overflow-hidden">
           <ul className="flex gap-y-1 flex-col py-2 px-2">
             {isLogged ? (
               <>
@@ -101,7 +101,7 @@ export default function Header() {
               </>
             )}
           </ul>
-        </div>
+        </nav>
       )}
     </header>
   );
