@@ -101,7 +101,7 @@ export default function Modal(props: IPropsModal) {
               <div className="flex gap-x-20 mr-12 pl-96">
                 <p>
                   <span className="text-white pr-1">Avaliação:</span>{' '}
-                  {contentModal[0].rating} / 5.0
+                  {(Number(contentModal[0].rating)).toFixed(1)} / 5.0
                 </p>
                 <div
                   className="flex flex-col items-center"
@@ -131,7 +131,7 @@ export default function Modal(props: IPropsModal) {
                 ID API: <span className="text-fonts">{contentModal[0].idAPI}</span>
               </p>
               <p>
-                Participantes: <span className="text-fonts">2</span>
+                Participantes: <span className="text-fonts">{contentModal[1].participants.length}</span>
               </p>
             </div>
             <div>

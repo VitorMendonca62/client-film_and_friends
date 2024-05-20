@@ -6,3 +6,5 @@ interface IRoom {
   path: string;
   type: TypeMedia;
 }
+
+type TypeDataRoom = [ISerie | IMovie, IRoom]

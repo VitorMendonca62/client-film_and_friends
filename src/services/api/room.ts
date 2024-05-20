@@ -8,6 +8,7 @@ export const api = axios.create({
 
 export const getPageRooms = async (page: number, type: 'movie' | 'serie') => {
   try {
+    console.log("a")
     const resposne = await api.get(`/${type}/${page}`);
     const { data } = resposne;
     return data;

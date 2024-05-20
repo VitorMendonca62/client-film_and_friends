@@ -47,7 +47,7 @@ export default function Card(props: IPropsCard) {
         </p>
         <p className="w-14 flex items-center justify-center gap-1">
           <MdOutlineGroup className="w-5 h-5 text-darkGreen" />
-          1/10
+          {media[1].participants.length}/10
         </p>
         <p className="w-14 flex items-center justify-center gap-1">
           <FaStar className="w-4 h-4 text-darkGreen" />{' '}
