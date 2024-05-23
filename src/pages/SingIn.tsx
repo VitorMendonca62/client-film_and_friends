@@ -4,9 +4,12 @@ import Button from '../components/Button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userLoginSchema } from '../schemas/user';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { clearInputs, handleErrors } from '../utils/forms';
 import { singIn } from '../services/api/user';
+import Cookies from 'js-cookie';
+import { UserContext } from '../context/user';
+import { jwtDecode } from 'jwt-decode';
 
 export default function SingIn() {
   const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
@@ -14,6 +17,8 @@ export default function SingIn() {
   const [visibleMessage, setVisibleMessage] = useState(false);
 
   const navigate = useNavigate();
+  const context = useContext<IUserContext | null>(UserContext);
+  const updateUser = context?.updateUser;
 
   useEffect(() => {
     document.querySelector('html')?.classList.add('overflow-x-hidden');
@@ -49,7 +54,15 @@ export default function SingIn() {
     }
 
     setTimeout(() => {
-      localStorage.setItem("authorization", `token ${token}` )
+      Cookies.set('USER_TOKEN', `token ${token}`, {
+        expires: 7,
+        secure: true,
+        sameSite: 'Strict',
+      });
+
+      const tokenDecoded = jwtDecode(token) as JwtPayload;
+      const { username } = tokenDecoded;
+      if (updateUser) updateUser({ auth: true, username, isLogged: true });
       navigate('/home');
     }, 3500);
   };

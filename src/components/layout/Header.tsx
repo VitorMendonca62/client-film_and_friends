@@ -1,4 +1,10 @@
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import {
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  useContext,
+} from 'react';
 import { Link } from 'react-router-dom';
 
 // ICONS
@@ -7,6 +13,7 @@ import { ImExit } from 'react-icons/im';
 import { FaUserLarge } from 'react-icons/fa6';
 import { MdInput } from 'react-icons/md';
 import { FaUserPlus } from 'react-icons/fa';
+import { UserContext } from '../../context/user';
 
 let lastValueScroll = 0;
 function changeHeaderStyles(setVisibleMenu: Dispatch<SetStateAction<boolean>>) {
@@ -37,7 +44,12 @@ function changeHeaderStyles(setVisibleMenu: Dispatch<SetStateAction<boolean>>) {
 
 export default function Header() {
   const [visibleMenu, setVisibleMenu] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
+
+  const context = useContext<IUserContext | null>(UserContext);
+  const user = context?.user;
+  const logoutUser = context?.logoutUser;
+
+  const isLogged = user?.isLogged;
 
   function handleChangePath() {
     lastValueScroll = 0;
@@ -48,6 +60,8 @@ export default function Header() {
 
   useEffect(() => {
     window.addEventListener('scroll', () => changeHeaderStyles(setVisibleMenu));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -64,7 +78,7 @@ export default function Header() {
         >
           Olá,
           <span className="ml-1 text-darkGreen font-bold group-hover:text-white ">
-            Visitante
+            {user?.username}
           </span>
           <GoChevronDown className="ml-2" />
         </div>
@@ -79,7 +93,13 @@ export default function Header() {
                     <FaUserLarge className="w-3 h-3 mr-2" /> Meu perfil
                   </li>
                 </Link>
-                <Link to="/" onClick={handleChangePath}>
+                <Link
+                  to="/"
+                  onClick={() => {
+                    handleChangePath();
+                    if (logoutUser) logoutUser();
+                  }}
+                >
                   <li className="flex items-center hover:bg-darkGreen hover:rounded-2xl px-4 py-2 cursor-pointer">
                     <ImExit className="w-3 h-3 mr-2" /> Sair
                   </li>

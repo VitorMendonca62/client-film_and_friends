@@ -17,7 +17,7 @@ export const handleErrors = (errors: FieldErrors<IUserBasicInputcSchema>) => {
     element.classList.remove('border-transparent');
     element.classList.add('border-red');
     const brotherElement = document.querySelector(
-      `form span[name=${key}]`,
+      `form span[data-name=${key}]`,
     ) as Element;
     brotherElement.innerHTML = errors[key].message;
   }

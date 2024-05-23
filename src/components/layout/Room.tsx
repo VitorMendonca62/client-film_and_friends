@@ -25,7 +25,6 @@ export default function Room(props: IPropsRoom) {
     setCanRefetch,
   } = props;
 
-
   // COLOCAR ENABLE COMO ISLOGGED OU !MEDIAS
   const { isLoading, refetch } = useQuery({
     queryKey: `getRooms${title}`,
@@ -52,6 +51,7 @@ export default function Room(props: IPropsRoom) {
 
   useEffect(() => {
     refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRefetch]);
   return (
     <div className="my-10 ">

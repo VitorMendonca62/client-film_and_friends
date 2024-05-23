@@ -21,10 +21,10 @@ export const singIn = async (dataForms: IUserLoginSchema) => {
   try {
     const response = await api.post('/auth/login', dataForms);
     const { data } = response;
-    console.log(data);
     return data;
   } catch (err) {
     const { data } = err.response;
     return data;
   }
 };
+

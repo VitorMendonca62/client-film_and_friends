@@ -11,8 +11,8 @@ export const getPageRooms = async (
   type: 'movie' | 'serie',
 ): Promise<TypeDataRoom[]> => {
   try {
-    const resposne = await api.get(`/${type}/${page}`);
-    const data: TypeDataRoom[] = resposne.data.data;
+    const response = await api.get(`/${type}/${page}`);
+    const data: TypeDataRoom[] = response.data.data;
     return data;
   } catch (err) {
     const data = err.resposne.data;

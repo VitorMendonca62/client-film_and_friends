@@ -24,7 +24,7 @@ export default function InputForms(props: IPropsInputForms) {
         className="rounded-3xl p-2 w-72 text-xs border-2 border-transparent focus:border-darkGreen outline-0"
         {...register(nameInput.toString())}
       />
-      <span name={nameInput} className="absolute translate-y-[3.75rem] text-xs text-[#F00]"></span>
+      <span data-name={nameInput} className="absolute translate-y-[3.75rem] text-xs text-[#F00]"></span>
       <input type="hidden" className="border-red" />
     </div>
   );

@@ -5,18 +5,21 @@ import Header from './components/layout/Header';
 import SingIn from './pages/SingIn';
 import SingUp from './pages/SingUp';
 import App from './App';
-
+import { useState } from 'react';
 
 export default function FuctionRoutes() {
   return (
     <BrowserRouter>
-      <Header/>
+      <Header />
       <Routes>
-        <Route path="/" element={<App/>}/>
-        <Route path='/home' element={<Home/>} />
-        <Route path='/singin' element={<SingIn/>} />
-        <Route path='/singup' element={<SingUp/>} />
+        <Route path="/" element={<App />} />
+        <Route
+          path="/home"
+          element={<Home />}
+        />
+        <Route path="/singin" element={<SingIn />} />
+        <Route path="/singup" element={<SingUp />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }

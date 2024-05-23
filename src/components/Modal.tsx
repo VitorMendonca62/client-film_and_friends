@@ -10,6 +10,7 @@ import { defineTypeMedia } from '../utils/media';
 interface IPropsModal {
   setVisibleModal: (visibleModal: boolean) => void;
   contentModal: [ISerie | IMovie, IRoom];
+  isLogged: boolean;
 }
 
 export default function Modal(props: IPropsModal) {
@@ -17,9 +18,8 @@ export default function Modal(props: IPropsModal) {
   const [rating, setRating] = useState<null | number>(null);
   const [stars] = useState<JSX.Element[]>([]);
   const [enablesStars, setEnablesStars] = useState(rating || 0);
-  const [isLogged, setIsLogged] = useState(false);
 
-  const { setVisibleModal, contentModal } = props;
+  const { setVisibleModal, contentModal, isLogged } = props;
 
   const typeMedia = defineTypeMedia(contentModal[0]);
 
