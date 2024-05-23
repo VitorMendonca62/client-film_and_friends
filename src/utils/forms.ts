@@ -1,3 +1,5 @@
+// LEmbrar de colocar bordas vermelha nos forms, algum erro está acontecendo
+
 import { FieldErrors } from 'react-hook-form';
 
 export const clearInputs = () => {
@@ -12,7 +14,6 @@ export const handleErrors = (errors: FieldErrors<IUserBasicInputcSchema>) => {
 
   for (const key in errors) {
     const element = errors[key].ref as Element;
-    console.log(elem)
     element.classList.remove('border-transparent');
     element.classList.add('border-red');
     const brotherElement = document.querySelector(

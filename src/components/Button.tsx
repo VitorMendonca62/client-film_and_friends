@@ -1,17 +1,20 @@
+// FAZER O BUTTON DISABLED
+
+
 import { useRef } from 'react';
 
 interface IButton {
   title: string;
   isBigger: boolean;
   type: 'submit' | 'reset' | 'button' | undefined;
-  buttonIsDisabled: boolean;
+  buttonIsDisabled?: boolean;
 }
 
 export default function Button(props: IButton) {
   const buttonRef = useRef(null);
 
-  if (buttonRef.current) {
-    buttonRef.current.disabled = props.buttonIsDisabled;
+  if (buttonRef.current && props.buttonIsDisabled != undefined) {
+    (buttonRef.current as HTMLButtonElement).disabled = props.buttonIsDisabled;
   }
 
   return (

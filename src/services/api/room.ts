@@ -6,14 +6,16 @@ export const api = axios.create({
   baseURL: API_URL,
 });
 
-export const getPageRooms = async (page: number, type: 'movie' | 'serie') => {
+export const getPageRooms = async (
+  page: number,
+  type: 'movie' | 'serie',
+): Promise<TypeDataRoom[]> => {
   try {
-    console.log("a")
     const resposne = await api.get(`/${type}/${page}`);
-    const { data } = resposne;
+    const data: TypeDataRoom[] = resposne.data.data;
     return data;
   } catch (err) {
-    const { data } = err.response;
+    const data = err.resposne.data;
     return data;
   }
 };

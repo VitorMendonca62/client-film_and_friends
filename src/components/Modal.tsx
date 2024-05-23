@@ -15,9 +15,9 @@ interface IPropsModal {
 export default function Modal(props: IPropsModal) {
   const [visibleRating, setVisibleRating] = useState(false);
   const [rating, setRating] = useState<null | number>(null);
-  const [stars, setStars] = useState<JSX.Element[]>([]);
+  const [stars] = useState<JSX.Element[]>([]);
   const [enablesStars, setEnablesStars] = useState(rating || 0);
-  const [isLogged, setIsLogged] = useState(true);
+  const [isLogged, setIsLogged] = useState(false);
 
   const { setVisibleModal, contentModal } = props;
 
@@ -77,7 +77,7 @@ export default function Modal(props: IPropsModal) {
         onClick={() => setVisibleModal(false)}
       ></div>
       {isLogged ? (
-        <div className="-translate-y-10 text-white z-50">
+        <div className="-translate-y-10 text-white z-50 animate-showModal">
           <header className="bg-black flex justify-between items-center px-6 py-2 rounded-t-2xl">
             <p className="text-sm cursor-pointer hover:text-darkGreen hover:underline">
               Favoritar
@@ -91,7 +91,8 @@ export default function Modal(props: IPropsModal) {
             <h3 className="font-bold text-2xl">{contentModal[0].title}</h3>
             <div className="flex w-full justify-between text-fonts items-center">
               <p className="text-sm">
-                {contentModal[0].releaseDate.slice(0, 4)} | {contentModal[0].genres[0]} |{" "} 
+                {contentModal[0].releaseDate.slice(0, 4)} |{' '}
+                {contentModal[0].genres[0]} |{' '}
                 {typeMedia
                   ? typeMedia === 'movie'
                     ? `${(contentModal[0] as IMovie).duration} min`
@@ -101,7 +102,7 @@ export default function Modal(props: IPropsModal) {
               <div className="flex gap-x-20 mr-12 pl-96">
                 <p>
                   <span className="text-white pr-1">Avaliação:</span>{' '}
-                  {(Number(contentModal[0].rating)).toFixed(1)} / 5.0
+                  {Number(contentModal[0].rating).toFixed(1)} / 5.0
                 </p>
                 <div
                   className="flex flex-col items-center"
@@ -128,10 +129,14 @@ export default function Modal(props: IPropsModal) {
                 ID: <span className="text-fonts">{contentModal[1].id}</span>
               </p>
               <p>
-                ID API: <span className="text-fonts">{contentModal[0].idAPI}</span>
+                ID API:{' '}
+                <span className="text-fonts">{contentModal[0].idAPI}</span>
               </p>
               <p>
-                Participantes: <span className="text-fonts">{contentModal[1].participants.length}</span>
+                Participantes:{' '}
+                <span className="text-fonts">
+                  {contentModal[1].participants.length}
+                </span>
               </p>
             </div>
             <div>
@@ -144,12 +149,12 @@ export default function Modal(props: IPropsModal) {
               ></iframe>
             </div>
             <div className="w-full flex justify-center mt-5">
-              <Button title="Entrar" isBigger={true} />
+              <Button title="Entrar" isBigger={true} type="button" />
             </div>
           </main>
         </div>
       ) : (
-        <div className="-translate-y-10 text-white z-50 rounded-3xl">
+        <div className="-translate-y-10 text-white z-50 rounded-3xl animate-showModal">
           <header className="bg-black flex justify-end items-center px-6 py-2 rounded-t-2xl">
             <IoCloseCircleOutline
               className="w-8 h-8 cursor-pointer hover:text-darkGreen"
@@ -162,12 +167,12 @@ export default function Modal(props: IPropsModal) {
               Faça login ou cadastra-se para assistir todos os filmes e séries
               junto com seus amigos
             </p>
-            <Link to={'/sing'} className="w-full flex justify-center mt-5">
-              <Button title="Cadastrar" isBigger={true} />
+            <Link to={'/singup'} className="w-full flex justify-center mt-5">
+              <Button title="Cadastrar" isBigger={true} type="button" />
             </Link>
             <p className="my-4 text-fonts w-full max-w-lg text-center">OU</p>
             <Link to={'/singin'} className="w-full flex justify-center">
-              <Button title="Entrar" isBigger={true} />
+              <Button title="Entrar" isBigger={true} type="button" />
             </Link>
           </main>
         </div>

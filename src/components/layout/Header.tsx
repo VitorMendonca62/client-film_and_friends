@@ -15,8 +15,8 @@ function changeHeaderStyles(setVisibleMenu: Dispatch<SetStateAction<boolean>>) {
   if (['/home'].includes(location.pathname)) {
     if (lastValueScroll < window.scrollY) {
       if (!headerElement?.classList.contains('-translate-y-full'))
-        setVisibleMenu(false)
-        headerElement?.classList.add('-translate-y-full');
+        setVisibleMenu(false);
+      headerElement?.classList.add('-translate-y-full');
     }
     if (lastValueScroll > window.scrollY) {
       headerElement?.classList.remove('-translate-y-full');
@@ -48,7 +48,6 @@ export default function Header() {
 
   useEffect(() => {
     window.addEventListener('scroll', () => changeHeaderStyles(setVisibleMenu));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

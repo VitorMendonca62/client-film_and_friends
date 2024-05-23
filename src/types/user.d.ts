@@ -6,6 +6,10 @@ interface IUserBasicInputcSchema {
   confirmPassword?: string;
 }
 
+interface IUserLoginSchema {
+  email: string;
+  password: string;
+}
 type TypesInputs =
   | 'name'
   | 'username'

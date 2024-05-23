@@ -3,18 +3,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import InputForms from '../components/InputForms';
 import Button from '../components/Button';
-import { useForm, FieldErrors } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { userPostSchema } from '../schemas/user';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { singUP } from '../services/api/user';
 import { clearInputs, handleErrors } from '../utils/forms';
 
 export default function SingUp() {
+  const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
+  const [message, setMessage] = useState('');
+  const [visibleMessage, setVisibleMessage] = useState(false);
+
   const navigate = useNavigate();
 
-  const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
-  const [message, setMessage] = useState('awdawdawdawdawdwa');
-  const [visibleMessage, setVisibleMessage] = useState(false);
+  useEffect(() => {
+    document.querySelector('html')?.classList.add('overflow-x-hidden');
+  }, []);
 
   const {
     register,
@@ -40,7 +44,7 @@ export default function SingUp() {
       setTimeout(() => {
         setButtonIsDisabled(false);
         setVisibleMessage(false);
-        setMessage("msg");
+        setMessage('msg');
       }, 3500);
       return;
     }
@@ -49,7 +53,7 @@ export default function SingUp() {
   };
 
   return (
-    <main className="pt-16 bg-black h-screen flex items-center justify-center overflow-x-hidden">
+    <main className="pt-16 bg-black h-screen flex items-center justify-center overflow-hidden">
       <div
         className={`absolute text-white right-0 ${
           visibleMessage ? '-translate-x-2' : 'translate-x-[16rem]'

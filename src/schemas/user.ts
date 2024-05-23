@@ -42,5 +42,11 @@ export const userPostSchema = z
     confirmPassword: userSchemas.confirmPassword,
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
-    message: 'As senhas precisam ser iguais.', path: ["confirmPassword"]
+    message: 'As senhas precisam ser iguais.',
+    path: ['confirmPassword'],
   });
+
+export const userLoginSchema = z.object({
+  email: userSchemas.email,
+  password: userSchemas.password,
+});
