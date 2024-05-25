@@ -10,15 +10,18 @@ export const clearInputs = () => {
 };
 
 export const handleErrors = (errors: FieldErrors<IUserBasicInputcSchema>) => {
+  console.log(errors);
   clearInputs();
 
   for (const key in errors) {
     const element = errors[key].ref as Element;
-    element.classList.remove('border-transparent');
-    element.classList.add('border-red');
-    const brotherElement = document.querySelector(
-      `form span[data-name=${key}]`,
-    ) as Element;
-    brotherElement.innerHTML = errors[key].message;
+    if (element.classList) {
+      element.classList.remove('border-transparent');
+      element.classList.add('border-red');
+      const brotherElement = document.querySelector(
+        `form span[data-name=${key}]`,
+      ) as Element;
+      brotherElement.innerHTML = errors[key].message;
+    }
   }
 };

@@ -126,6 +126,9 @@ export default function Modal(props: IPropsModal) {
             <div>
               <h3 className="font-bold text-2xl pb-2">Sala</h3>
               <p>
+                Dono: <span className="text-fonts">{contentModal[1].author}</span>
+              </p>
+              <p>
                 ID: <span className="text-fonts">{contentModal[1].id}</span>
               </p>
               <p>

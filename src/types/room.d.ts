@@ -7,4 +7,12 @@ interface IRoom {
   type: TypeMedia;
 }
 
-type TypeDataRoom = [ISerie | IMovie, IRoom]
+type TypeDataRoom = [ISerie | IMovie, IRoom];
+
+type APIName = 'movie' | 'tv';
+
+interface IRoomInput {
+  id: string;
+  type: TypeMedia;
+  APIName: APIName;
+}

@@ -14,6 +14,7 @@ export default function UserProvider(props: IPropsUserContenxt) {
     auth: false,
     username: 'Visitante',
     isLogged: false,
+    token: null,
   });
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function UserProvider(props: IPropsUserContenxt) {
       if (token) {
         const tokenDecoded = jwtDecode(token) as JwtPayload;
         const { username } = tokenDecoded;
-        setUser({ auth: true, username, isLogged: true });
+        setUser({ auth: true, username, isLogged: true, token });
       }
     };
     verifyToken();
@@ -33,7 +34,12 @@ export default function UserProvider(props: IPropsUserContenxt) {
   };
 
   const handleLogout = () => {
-    setUser({ auth: false, username: 'Visitante', isLogged: false });
+    setUser({
+      auth: false,
+      username: 'Visitante',
+      isLogged: false,
+      token: null,
+    });
     Cookies.remove('USER_TOKEN');
   };
 

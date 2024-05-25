@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const API_URL = 'http://localhost:5145/rooms';
 
@@ -15,7 +16,24 @@ export const getPageRooms = async (
     const data: TypeDataRoom[] = response.data.data;
     return data;
   } catch (err) {
-    const data = err.resposne.data;
+    const data = err.response.data;
+    return data;
+  }
+};
+
+export const createRoom = async (dataForms: IRoomInput): Promise<any> => {
+  try {
+    const token = Cookies.get('USER_TOKEN');
+
+    const response = await api.post(`/`, dataForms, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    const data = response.data;
+    return data;
+  } catch (err) {
+    const data = err.response.data;
     return data;
   }
 };

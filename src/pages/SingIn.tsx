@@ -62,7 +62,8 @@ export default function SingIn() {
 
       const tokenDecoded = jwtDecode(token) as JwtPayload;
       const { username } = tokenDecoded;
-      if (updateUser) updateUser({ auth: true, username, isLogged: true });
+      if (updateUser)
+        updateUser({ auth: true, username, isLogged: true, token });
       navigate('/home');
     }, 3500);
   };

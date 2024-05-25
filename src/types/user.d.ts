@@ -15,6 +15,7 @@ interface IUserDataContext {
   username: string;
   auth: boolean;
   isLogged: boolean;
+  token: string | null;
 }
 
 type TypesInputs =

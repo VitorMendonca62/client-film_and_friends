@@ -586,6 +586,10 @@ html {
   top: 0px;
 }
 
+.top-20 {
+  top: 5rem;
+}
+
 .top-24 {
   top: 6rem;
 }
