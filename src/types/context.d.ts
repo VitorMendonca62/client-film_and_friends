@@ -1,0 +1,3 @@
+interface IPropsContenxt {
+  children: ReactNode;
+}

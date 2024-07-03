@@ -10,6 +10,7 @@ import { singIn } from '../services/api/user';
 import Cookies from 'js-cookie';
 import { UserContext } from '../context/user';
 import { jwtDecode } from 'jwt-decode';
+import useUser from '../hooks/useUser';
 
 export default function SingIn() {
   const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
@@ -17,8 +18,7 @@ export default function SingIn() {
   const [visibleMessage, setVisibleMessage] = useState(false);
 
   const navigate = useNavigate();
-  const context = useContext<IUserContext | null>(UserContext);
-  const updateUser = context?.updateUser;
+  const { updateUser } = useUser()
 
   useEffect(() => {
     document.querySelector('html')?.classList.add('overflow-x-hidden');
@@ -70,9 +70,8 @@ export default function SingIn() {
   return (
     <main className="pt-16 bg-black h-screen flex items-center justify-center overflow-hidden">
       <div
-        className={`absolute text-white right-0 ${
-          visibleMessage ? '-translate-x-2' : 'translate-x-[16rem]'
-        } top-24 bg-darkGreen p-8 rounded-3xl transition linear duration-500 `}
+        className={`absolute text-white right-0 ${visibleMessage ? '-translate-x-2' : 'translate-x-[16rem]'
+          } top-24 bg-darkGreen p-8 rounded-3xl transition linear duration-500 `}
       >
         {message}
       </div>

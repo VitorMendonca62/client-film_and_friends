@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
 
@@ -10,6 +10,8 @@ import { clearInputs, handleErrors } from '../utils/forms';
 import InputForms from './InputForms';
 import Select from './Select';
 import { createRoom } from '../services/api/room';
+import useSocket from '../hooks/useSocket';
+// import { URLContext } from '../context/url';
 
 interface IPropsModal {
   setVisibleModalCreateRoom: (visibleModalCreateRoom: boolean) => void;
@@ -17,6 +19,7 @@ interface IPropsModal {
 }
 
 export default function ModalCreateRoom(props: IPropsModal) {
+
   const { isLogged, setVisibleModalCreateRoom } = props;
   const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
   const [message, setMessage] = useState('');
@@ -41,30 +44,29 @@ export default function ModalCreateRoom(props: IPropsModal) {
   }
   const createRoomInSubmit = async (dataform: IRoomInput) => {
     const { msg, error, data } = await createRoom(dataform);
-
     const id = data.id;
     setButtonIsDisabled(true);
     setMessage(msg);
     setVisibleMessage(true);
 
     if (error) {
-      
       setTimeout(() => {
         setButtonIsDisabled(false);
         setVisibleMessage(false);
-        setMessage("msg");
+        setMessage('msg');
       }, 3500);
       return;
     }
 
-    setTimeout(() => navigate(`/media/${id}`,), 3500);
+
+    setTimeout(() => navigate(`/sala/${id}`), 3500);
   };
+
   return (
     <section className=" fixed top-0 translate-y-16 flex items-center justify-center h-screen w-screen ">
       <div
-        className={`fixed text-white right-0 ${
-          visibleMessage ? '-translate-x-2' : 'translate-x-[16rem]'
-        } top-20 bg-darkGreen p-8 rounded-3xl transition linear duration-500 z-50 `}
+        className={`fixed text-white right-0 ${visibleMessage ? '-translate-x-2' : 'translate-x-[16rem]'
+          } top-20 bg-darkGreen p-8 rounded-3xl transition linear duration-500 z-50 `}
       >
         {message}
       </div>
@@ -96,8 +98,8 @@ export default function ModalCreateRoom(props: IPropsModal) {
                 control={control}
                 setValue={setValue}
                 options={[
-                  { value: 'movie', label: 'Movie' },
-                  { value: 'tv', label: 'Serie' },
+                  { value: 'movie', label: 'Filme' },
+                  { value: 'tv', label: 'Série' },
                 ]}
               />
               <Select

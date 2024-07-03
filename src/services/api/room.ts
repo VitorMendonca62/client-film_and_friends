@@ -37,3 +37,14 @@ export const createRoom = async (dataForms: IRoomInput): Promise<any> => {
     return data;
   }
 };
+
+export const showRoom = async (id: string): Promise<any> => {
+  try {
+    const response = await api.get(`/${id}`);
+    const data = response.data;
+    return data;
+  } catch (err) {
+    const data = err.response.data;
+    return data;
+  }
+};

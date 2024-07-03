@@ -2,7 +2,6 @@ import { FaStar } from 'react-icons/fa';
 import { MdOutlineGroup } from 'react-icons/md';
 import { defineTypeMedia } from '../utils/media';
 
-
 interface IPropsCard {
   media: [ISerie | IMovie, IRoom];
   setContentModal: (media: [ISerie | IMovie, IRoom]) => void;
@@ -47,7 +46,7 @@ export default function Card(props: IPropsCard) {
         </p>
         <p className="w-14 flex items-center justify-center gap-1">
           <MdOutlineGroup className="w-5 h-5 text-darkGreen" />
-          {media[1].participants.length}/10
+          {media[1].participants.filter(i => i).length}/10
         </p>
         <p className="w-14 flex items-center justify-center gap-1">
           <FaStar className="w-4 h-4 text-darkGreen" />{' '}

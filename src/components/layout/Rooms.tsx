@@ -64,9 +64,8 @@ export default function Room(props: IPropsRoom) {
         <>
           <div className="flex flex-col gap-y-8">
             <div
-              className={`grid grid-cols-[repeat(auto-fill,16rem)] grid-rows-${
-                medias.length > 5 ? '2' : '1'
-              } justify-center gap-x-12 gap-y-12`}
+              className={`grid grid-cols-[repeat(auto-fill,16rem)] grid-rows-${medias.length > 5 ? '2' : '1'
+                } justify-center gap-x-12 gap-y-12`}
             >
               {medias.map((media: TypeDataRoom) => {
                 return (

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { FaRegStar } from 'react-icons/fa6';
@@ -28,6 +28,13 @@ export default function Modal(props: IPropsModal) {
   if (description.length > 450) {
     description = description.slice(0, 450) + '...';
   }
+
+  const navigate = useNavigate();
+
+
+  const enterInRoom = () => {
+    navigate(`/sala/${contentModal[1].id}`);
+  };
 
   const createStars = () => {
     stars.length = 0;
@@ -126,7 +133,8 @@ export default function Modal(props: IPropsModal) {
             <div>
               <h3 className="font-bold text-2xl pb-2">Sala</h3>
               <p>
-                Dono: <span className="text-fonts">{contentModal[1].author}</span>
+                Dono:{' '}
+                <span className="text-fonts">{contentModal[1].author}</span>
               </p>
               <p>
                 ID: <span className="text-fonts">{contentModal[1].id}</span>
@@ -149,10 +157,10 @@ export default function Modal(props: IPropsModal) {
                 height="250"
                 src={contentModal[0].urlTrailer?.replace('watch?v=', 'embed/')}
                 title="YouTube video player"
-              ></iframe>
-            </div>
-            <div className="w-full flex justify-center mt-5">
-              <Button title="Entrar" isBigger={true} type="button" />
+              ></iframe>{' '}
+              <div className="flex justify-center mt-5" onClick={enterInRoom}>
+                <Button title="Entrar" isBigger={true} type="button" />
+              </div>
             </div>
           </main>
         </div>

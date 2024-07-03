@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 
 import Modal from '../components/Modal';
-import Room from '../components/layout/Room';
-import { UserContext } from '../context/user';
+import Rooms from '../components/layout/Rooms';
+
 import { GoPlus } from 'react-icons/go';
 import ModalCreateRoom from '../components/ModalCreateRoom';
+import useUser from '../hooks/useUser';
 
 export default function Home() {
   const [visibleModal, setVisibleModal] = useState(false);
@@ -13,10 +14,9 @@ export default function Home() {
   const [refetch, setRefetch] = useState(false);
   const [canRefetch, setCanRefetch] = useState(false);
 
-  const context = useContext<IUserContext | null>(UserContext);
-  const user = context?.user;
+  const { user } = useUser()
 
-  const isLogged = !!user?.isLogged;
+  const isLogged = user.isLogged;
 
   useEffect(() => {
     const html = document.querySelector('html');
@@ -33,9 +33,8 @@ export default function Home() {
   return (
     <main className="bg-black">
       <div
-        className={`fixed text-white -top-16  transition duration-[1s] linear ${
-          canRefetch ? 'translate-y-36' : 'translate-y-0'
-        }   translate-x-[calc(50vw-50%)] cursor-pointer p-3 bg-darkGreen rounded-3xl border border-transparent hover:border-white `}
+        className={`fixed text-white -top-16  transition duration-[1s] linear ${canRefetch ? 'translate-y-36' : 'translate-y-0'
+          }   translate-x-[calc(50vw-50%)] cursor-pointer p-3 bg-darkGreen rounded-3xl border border-transparent hover:border-white `}
         onClick={() => setRefetch(true)}
       >
         Há novas salas, clique aqui para atualizar!
@@ -59,7 +58,7 @@ export default function Home() {
         </p>
       </section>
       <section className="bg-black text-white px-7 pt-5">
-        <Room
+        <Rooms
           title="Recentes"
           setContentModal={setContentModal}
           setVisibleModal={setVisibleModal}

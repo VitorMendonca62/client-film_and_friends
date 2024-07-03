@@ -13,7 +13,7 @@ import { ImExit } from 'react-icons/im';
 import { FaUserLarge } from 'react-icons/fa6';
 import { MdInput } from 'react-icons/md';
 import { FaUserPlus } from 'react-icons/fa';
-import { UserContext } from '../../context/user';
+import useUser from '../../hooks/useUser';
 
 let lastValueScroll = 0;
 function changeHeaderStyles(setVisibleMenu: Dispatch<SetStateAction<boolean>>) {
@@ -45,11 +45,9 @@ function changeHeaderStyles(setVisibleMenu: Dispatch<SetStateAction<boolean>>) {
 export default function Header() {
   const [visibleMenu, setVisibleMenu] = useState(false);
 
-  const context = useContext<IUserContext | null>(UserContext);
-  const user = context?.user;
-  const logoutUser = context?.logoutUser;
+  const { logoutUser, user } = useUser()
 
-  const isLogged = user?.isLogged;
+  const isLogged = user.isLogged;
 
   function handleChangePath() {
     lastValueScroll = 0;
@@ -60,8 +58,6 @@ export default function Header() {
 
   useEffect(() => {
     window.addEventListener('scroll', () => changeHeaderStyles(setVisibleMenu));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
