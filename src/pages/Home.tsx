@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Modal from '../components/Modal';
 import Rooms from '../components/layout/Rooms';

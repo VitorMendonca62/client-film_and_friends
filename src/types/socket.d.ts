@@ -5,6 +5,4 @@ interface ISocketContext {
   url: string | undefined;
   updateSocket: (newSocket: Socket) => void;
   connectSocket: () => Socket;
-  updateURL: (newURL: string) => void;
-  isNotChangeInUrl: (urlComparation: string) => boolean;
 }

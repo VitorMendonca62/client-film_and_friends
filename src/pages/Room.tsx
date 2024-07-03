@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { showRoom } from '../services/api/room';
 // import socket from '../services/socket';
@@ -18,7 +18,7 @@ export default function Room() {
   const effectExecuted = useRef(false);
   const username = useRef('');
 
-  const { connectSocket, updateURL } = useSocket()
+  const { connectSocket } = useSocket()
 
 
   useEffect(() => {
@@ -33,7 +33,6 @@ export default function Room() {
         if (!data.data) return navigate('/home');
 
         setRoom(data.data);
-        return id;
       } catch (error) {
         navigate('/home');
       }
@@ -56,7 +55,6 @@ export default function Room() {
     })
 
     socket.emit('joinRoom', id, username.current);
-    updateURL(`${location.origin}/sala/${id}`)
   }, []);
 
   return (

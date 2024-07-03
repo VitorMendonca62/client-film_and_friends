@@ -21,19 +21,6 @@ export default function SocketProvider(props: IPropsContenxt) {
     return _socket;
   };
 
-  const handleUpdateURL = (newUrl: string) => {
-    url = newUrl;
-  };
-
-  const isNotChangeInUrl = (urlComparation: string) => {
-    console.log(url, urlComparation)
-    if (url !== urlComparation && socket?.connected) {
-      socket?.disconnect();
-      return true;
-    }
-    return false;
-  };
-
   if (props) {
     const { children } = props;
 
@@ -43,21 +30,11 @@ export default function SocketProvider(props: IPropsContenxt) {
           socket,
           url,
           updateSocket: handleUpdateSocket,
-          connectSocket,
-          updateURL: handleUpdateURL,
-          isNotChangeInUrl,
+          connectSocket
         }}
       >
         {children}
       </SocketContext.Provider>
     );
   }
-
-
-
-
-
-
-
-
 }

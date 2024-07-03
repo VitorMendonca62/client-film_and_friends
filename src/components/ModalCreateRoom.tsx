@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
 
@@ -10,8 +10,6 @@ import { clearInputs, handleErrors } from '../utils/forms';
 import InputForms from './InputForms';
 import Select from './Select';
 import { createRoom } from '../services/api/room';
-import useSocket from '../hooks/useSocket';
-// import { URLContext } from '../context/url';
 
 interface IPropsModal {
   setVisibleModalCreateRoom: (visibleModalCreateRoom: boolean) => void;

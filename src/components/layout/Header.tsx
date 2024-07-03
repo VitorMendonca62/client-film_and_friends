@@ -5,7 +5,7 @@ import {
   SetStateAction,
   useContext,
 } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 // ICONS
 import { GoChevronDown } from 'react-icons/go';
@@ -14,6 +14,7 @@ import { FaUserLarge } from 'react-icons/fa6';
 import { MdInput } from 'react-icons/md';
 import { FaUserPlus } from 'react-icons/fa';
 import useUser from '../../hooks/useUser';
+import useSocket from '../../hooks/useSocket';
 
 let lastValueScroll = 0;
 function changeHeaderStyles(setVisibleMenu: Dispatch<SetStateAction<boolean>>) {
@@ -46,6 +47,7 @@ export default function Header() {
   const [visibleMenu, setVisibleMenu] = useState(false);
 
   const { logoutUser, user } = useUser()
+  const { socket } = useSocket()
 
   const isLogged = user.isLogged;
 
@@ -56,14 +58,28 @@ export default function Header() {
     headerElement?.classList.add('bg-lightBlack');
   }
 
+  const discconectUserInRoom = () => {
+    const pathname = location.pathname
+
+    if (pathname.includes("/sala")) {
+      const id = pathname.split("/sala/")[1]
+      socket?.emit("_disconnect", id, user.username)
+    }
+  }
+
+
   useEffect(() => {
     window.addEventListener('scroll', () => changeHeaderStyles(setVisibleMenu));
+
+    return () => {
+      window.removeEventListener("scroll", () => changeHeaderStyles(setVisibleMenu))
+    }
   }, []);
 
   return (
     <header className="w-screen px-7 py-3.5 text-white z-50 fixed transition ease-in duration-500">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold">
+        <h2 className="text-xl font-bold" id='logo-site' onClick={discconectUserInRoom}>
           <Link to="/home">
             Movies<span className="text-darkGreen ">And</span>Friends
           </Link>
